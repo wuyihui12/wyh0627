@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人记录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Marvel:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #b11313;
+            --secondary: #2c3e50;
+            --accent: #f1c40f;
+            --text: #333;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #ff1a1a;
+            --secondary: #3498db;
+            --accent: #f39c12;
+            --text: #f0f0f0;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --header-bg: rgba(30, 30, 30, 0.95);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .marvel-font {
+            font-family: 'Marvel', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 导航栏样式 */
+        header {
+            background: var(--header-bg);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-family: 'Marvel', sans-serif;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        /* 英雄区域样式 */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 0 0 50% 50% / 30%;
+            margin-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1635863138275-d9b33299680a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+            font-family: 'Marvel', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* 添加字体颜色变换效果 */
+            background: linear-gradient(90deg, #ff1a1a, #f1c40f, #3498db, #b11313);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: colorChange 5s ease infinite;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1.4s ease;
+            font-family: 'Marvel', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: #ffd700;
+        }
+
+        /* 字幕走动效果 */
+        .marquee-container {
+            margin-top: 40px;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            border-radius: 5px;
+        }
+
+        .marquee {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+            padding: 0 10px;
+        }
+
+        .marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* 关于区域样式 */
+        .about {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 3px solid var(--primary);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            font-family: 'Marvel', sans-serif;
+            text-transform: uppercase;
+            /* 添加字体颜色变换效果 */
+            background: linear-gradient(90deg, #b11313, #f1c40f, #2c3e50, #b11313);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: colorChange 8s ease infinite;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        /* 学校介绍区域 */
+        .school {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 80px;
+            border-radius: 15px;
+        }
+
+        .school-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .school-info {
+            flex: 2;
+        }
+
+        .school-logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .school-logo i {
+            font-size: 100px;
+            color: var(--accent);
+        }
+
+        /* 项目区域样式 */
+        .projects {
+            margin-bottom: 80px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-family: 'Marvel', sans-serif;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .project-tag {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* 技能区域样式 */
+        .skills {
+            margin-bottom: 80px;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            border: 2px solid var(--secondary);
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+            font-family: 'Marvel', sans-serif;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: #e9e9e9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* 联系区域样式 */
+        .contact {
+            margin-bottom: 80px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            border: 2px solid var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: var(--card-bg);
+            padding: 50px 0 20px;
+            box-shadow: 0 -5px 20px var(--shadow);
+            border-top: 3px solid var(--primary);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        /* 新增动画效果 */
+        @keyframes colorChange {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 打字机效果 */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--accent);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent); }
+        }
+
+        /* 悬浮效果 */
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .about {
+                flex-direction: column;
+            }
+            
+            .school-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .marquee {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 新增特效样式 */
+
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* 滚动到顶部按钮 */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        /* 视差滚动效果 */
+        .parallax {
+            transform: translateY(var(--scroll-y));
+            transition: transform 0.1s;
+        }
+
+        /* 霓虹灯文字效果 */
+        .neon-text {
+            color: #fff;
+            text-shadow: 
+                0 0 5px var(--primary),
+                0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                0 0 40px var(--accent),
+                0 0 80px var(--accent);
+            animation: neon-flicker 2s infinite alternate;
+        }
+
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 5px var(--primary),
+                    0 0 10px var(--primary),
+                    0 0 20px var(--primary),
+                    0 0 40px var(--accent),
+                    0 0 80px var(--accent);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        /* 3D卡片翻转效果 */
+        .flip-card {
+            perspective: 1000px;
+            height: 200px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .flip-card-back {
+            background: var(--primary);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* 脉动动画 */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(177, 19, 19, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(177, 19, 19, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(177, 19, 19, 0);
+            }
+        }
+
+        /* 浮动元素 */
+        .float-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* 鼠标跟随效果 */
+        .cursor-follower {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 自定义鼠标效果 -->
+    <div class="cursor-follower"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    MarvelStudent
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#school">我的学校</a></li>
+                    <li><a href="#projects">兴趣</a></li>
+                    <li><a href="#skills">技能</a></li>
+                    <li><a href="#contact">联系我</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="neon-text">这很诡异你们知道吗</h1>
+            <p class="typewriter">我是龙族热爱者</p>
+            <a href="#contact" class="btn pulse">联系我</a>
+            
+            <!-- 字幕走动效果 -->
+            <div class="marquee-container">
+                <div class="marquee">
+                    <i class="fas fa-running"></i> 欢迎来到我的个人网站！探索更多特效！滚动查看全部内容！                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区域 -->
+    <section class="about container" id="about">
+        <div class="about-image float-element">
+            <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="蜘蛛侠">
+        </div>
+        <div class="about-content">
+            <h2 class="section-title">关于我</h2>
+            <p> 重点不在于他将如何拯救这个世界，而在其他人望向他背影的目光。 ——江南 《龙族》</p>
+            <p>爱有什么用呢?其实你从未拥有那种东西啊!你是个混血种你明白么?你不是个人类，当你获得能力的时候你就只能远离人群，你注定将与孤独为伴，就像天才、英雄和疯子。你不需要爱，有能力就能活下去!” ——江南 《龙族》</p>
+            <p>人小时候总是鄙夷"酒肉朋友"这四个字，长大后才发现，在你最难过的时候，只有喝杯酒和大块吃肉能让你稍微舒服些。某种意义上说酒肉才是你永恒的好朋友，因为它们从不弃你而去，所以世界上伤心的胖子越来越多。 ——江南 《龙族》</p>
+            <div class="project-tags">
+                <span class="project-tag">前端开发</span>
+                <span class="project-tag">UI/UX设计</span>
+                <span class="project-tag">漫威宇宙</span>
+                <span class="project-tag">学生</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学校介绍区域 -->
+    <section class="school container" id="school">
+        <div class="school-content">
+            <div class="school-info">
+                <h2 class="section-title">武汉市常青树实验学校三店校区</h2>
+                <p>武汉市三店学校是一所九年一贯制学校，于2005年9月1日成立（由原三店中学、百花小学、稻香小学、五七小学、西湖小学合并成）。2007年经验收为东西湖首批寄宿制学校。</p>
+                <p>学校注重学生全面发展，开设了丰富的选修课程和社团活动，包括科技创新、艺术体育等多个领域。我们学校以"厚德博学，求真创新"为校训，培养了一大批优秀毕业生。</p>
+                <p>难评</p>
+            </div>
+            <div class="school-logo">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-school" style="font-size: 100px; color: var(--accent);"></i>
+                            <h3>三店学校</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>厚德博学</h3>
+                            <p>求真创新</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目区域 -->
+    <section class="projects container" id="projects">
+        <h2 class="section-title">我的兴趣项目</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="钢铁侠">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">漫威角色数据库</h3>
+                    <p>一个收集漫威角色信息的网站，包含每个英雄的背景故事、能力和出场电影。</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML/CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">API</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1340092050435-2c8e2DBd90b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="美国队长">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">校园社团网站</h3>
+                    <p>说什么呢</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Vue.js</span>
+                        <span class="project-tag">Firebase</span>
+                        <span class="project-tag">CSS3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1623961074847-734ca75a1bf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="雷神">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">学习计划应用</h3>
+                    <p>一个帮助学生制定和管理学习计划的应用，包含提醒和进度跟踪功能。</p>
+                    <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能区域 -->
+    <section class="skills container" id="skills">
+        <h2 class="section-title">我的技能</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3 class="skill-title">前端技术</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>HTML/CSS</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="20%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>JavaScript</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="20%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>React</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="60%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3 class="skill-title">设计工具</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Figma</span>
+                        <span>10%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="10%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Photoshop</span>
+                        <span>10%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="10%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Illustrator</span>
+                        <span>50%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="50%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3 class="skill-title">其他技能</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Python</span>
+                        <span>10%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="10%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Java</span>
+                        <span>65%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="65%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Git</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="70%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系区域 -->
+    <section class="contact container" id="contact">
+        <h2 class="section-title">联系我</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h3>位置</h3>
+                        <p>武汉市东西湖区金银湖高级中学</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h3>电话</h3>
+                        <p>18986290627</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-qq"></i>
+                    </div>
+                    <div>
+                        <h3>QQ</h3>
+                        <p>2114930980</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h3>邮箱</h3>
+                        <p>wuyinhui0627@qq.com</p> <!-- 修改了邮箱地址 -->
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" class="form-control" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" class="form-control" placeholder="请输入您的邮箱" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">消息</label>
+                        <textarea id="message" class="form-control" placeholder="请输入您的消息" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">发送消息</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    MarvelStudent
+                </div>
+                <div class="social-links">
+                    <!-- 删除了QQ和微信图标 -->
+                    <a href="https://github.com/wuyihui12" class="social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://space.bilibili.com/3546563209070593?spm_id_from=333.1007.0.0" class="social-link" target="_blank">
+                        <i class="fab fa-bilibili"></i>
+                    </a>
+                    <a href="https://github.com/wuyihui12/markerwu" class="social-link" target="_blank">
+                        <i class="fas fa-code-branch"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 个人网站. 所有权利保留 | 由GitHub Pages托管</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- 粒子效果库 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        // 暗色/亮色模式切换
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // 检查本地存储中的主题偏好
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 5px 20px var(--shadow)';
+            } else {
+                header.style.boxShadow = '0 2px 10px var(--shadow)';
+            }
+
+            // 显示/隐藏返回顶部按钮
+            const scrollToTop = document.getElementById('scrollToTop');
+            if (window.scrollY > 300) {
+                scrollToTop.classList.add('active');
+            } else {
+                scrollToTop.classList.remove('active');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 返回顶部按钮功能
+        document.getElementById('scrollToTop').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 添加滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.section-title, .project-card, .skill-category');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // 如果是技能进度条，则触发动画
+                        if (entry.target.classList.contains('skill-category')) {
+                            animateSkillBars();
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+
+            // 初始化粒子效果
+            initParticles();
+            
+            // 初始化自定义鼠标效果
+            initCustomCursor();
+            
+            // 初始化表单提交效果
+            initFormEffects();
+        });
+
+        // 技能进度条动画
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = width;
+            });
+        }
+
+        // 粒子效果初始化
+        function initParticles() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: '#b11313'
+                    },
+                    shape: {
+                        type: 'circle',
+                        stroke: {
+                            width: 0,
+                            color: '#000000'
+                        }
+                    },
+                    opacity: {
+                        value: 0.5,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 2,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#b11313',
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: 'none',
+                        random: true,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false,
+                        attract: {
+                            enable: false,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: 'grab'
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: 'push'
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            line_linked: {
+                                opacity: 1
+                            }
+                        },
+                        push: {
+                            particles_nb: 4
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+        }
+
+        // 自定义鼠标效果
+        function initCustomCursor() {
+            const cursorFollower = document.querySelector('.cursor-follower');
+            const cursorDot = document.querySelector('.cursor-dot');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+                
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+            });
+            
+            // 鼠标悬停效果
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-category');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                    cursorFollower.style.background = 'rgba(177, 19, 19, 0.2)';
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursorFollower.style.background = 'transparent';
+                });
+            });
+        }
+
+        // 表单提交效果
+        function initFormEffects() {
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                // 显示加载动画
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 发送中...';
+                submitBtn.disabled = true;
+                
+                // 模拟发送过程
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> 发送成功！';
+                    submitBtn.style.background = '#4CAF50';
+                    
+                    // 3秒后恢复原状
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                        contactForm.reset();
+                    }, 3000);
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
